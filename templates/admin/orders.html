@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>إدارة الطلبات</h1>
+<table>
+    <tr>
+        <th>رقم الطلب</th>
+        <th>حالة الطلب</th>
+        <th>السعر الإجمالي</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.total_price }} درهم</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

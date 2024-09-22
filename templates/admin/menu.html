@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>إدارة القائمة</h1>
+<table>
+    <tr>
+        <th>الاسم</th>
+        <th>السعر</th>
+        <th>الوصف</th>
+    </tr>
+    {% for item in menu_items %}
+    <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }} درهم</td>
+        <td>{{ item.description }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{{ url_for('admin.add_menu_item') }}">إضافة صنف جديد</a>
+{% endblock %}

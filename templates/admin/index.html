@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>لوحة تحكم مطعم المحاشي</h1>
+<ul>
+    <li><a href="{{ url_for('admin.orders') }}">إدارة الطلبات</a></li>
+    <li><a href="{{ url_for('admin.menu') }}">إدارة القائمة</a></li>
+</ul>
+{% endblock %}
