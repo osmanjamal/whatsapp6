@@ -1,17 +1,33 @@
 {% extends "base.html" %}
 
+{% block title %}إدارة الطلبات{% endblock %}
+
 {% block content %}
-<h1>تقديم طلب</h1>
-<form method="POST">
-    <label for="phone">رقم الهاتف:</label>
-    <input type="text" id="phone" name="phone" required><br><br>
-    
-    <h2>اختر الأصناف:</h2>
-    {% for item in menu_items %}
-    <input type="checkbox" id="item{{ item.id }}" name="items" value="{{ item.id }}">
-    <label for="item{{ item.id }}">{{ item.name }} - {{ item.price }} درهم</label><br>
+<h1>إدارة الطلبات</h1>
+<table class="orders-table">
+    <thead>
+        <tr>
+            <th>رقم الطلب</th>
+            <th>اسم العميل</th>
+            <th>رقم الهاتف</th>
+            <th>الحالة</th>
+            <th>تاريخ الطلب</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer.name or 'غير محدد' }}</td>
+            <td>{{ order.customer.phone }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                <a href="{{ url_for('admin.update_order', order_id=order.id) }}" class="btn btn-small">تحديث</a>
+            </td>
+        </tr>
     {% endfor %}
-    
-    <br><input type="submit" value="تقديم الطلب">
-</form>
+    </tbody>
+</table>
 {% endblock %}

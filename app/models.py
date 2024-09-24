@@ -53,10 +53,10 @@ def init_db():
     # إضافة بعض عناصر القائمة الافتراضية
     if MenuItem.query.count() == 0:
         default_items = [
-            MenuItem(name='محشي ورق عنب', price=15.0, description='ورق عنب محشي بالأرز والتوابل'),
-            MenuItem(name='محشي كوسا', price=18.0, description='كوسا محشية باللحم المفروم والأرز'),
-            MenuItem(name='محشي باذنجان', price=16.0, description='باذنجان محشي بالخضار والأرز'),
-            MenuItem(name='محشي ملفوف', price=17.0, description='ملفوف محشي باللحم والأرز')
+            MenuItem(name='محشي ورق عنب', price=15.0, description='ورق عنب محشي بالأرز والتوابل', is_available=True),
+            MenuItem(name='محشي كوسا', price=18.0, description='كوسا محشية باللحم المفروم والأرز', is_available=True),
+            MenuItem(name='محشي باذنجان', price=16.0, description='باذنجان محشي بالخضار والأرز', is_available=True),
+            MenuItem(name='محشي ملفوف', price=17.0, description='ملفوف محشي باللحم والأرز', is_available=True)
         ]
         db.session.add_all(default_items)
         db.session.commit()

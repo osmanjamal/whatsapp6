@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}الصفحة الرئيسية{% endblock %}
+{% block title %}لوحة التحكم{% endblock %}
 
 {% block content %}
-<h1>مرحباً بكم في مطعم المحاشي</h1>
-<p>استمتع بأشهى أنواع المحاشي العربية الأصيلة.</p>
+<h1>لوحة التحكم</h1>
+<nav class="admin-nav">
+    <ul>
+        <li><a href="{{ url_for('admin.orders') }}">إدارة الطلبات</a></li>
+        <li><a href="{{ url_for('admin.menu') }}">إدارة القائمة</a></li>
+    </ul>
+</nav>
 {% endblock %}
-
-{% block extra_js %}
-<script src="{{ url_for('static', filename='js/home.js') }}"></script>
-{% endblock %}‍‍‍

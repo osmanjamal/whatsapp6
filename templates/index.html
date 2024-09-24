@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}الصفحة الرئيسية{% endblock %}
+
+{% block content %}
+<h1>مرحباً بكم في مطعم المحاشي</h1>
+<p>استمتع بأشهى أنواع المحاشي العربية الأصيلة.</p>
+<div class="cta-buttons">
+    <a href="{{ url_for('main.menu') }}" class="btn btn-primary">عرض القائمة</a>
+    <a href="{{ url_for('main.order') }}" class="btn btn-secondary">تقديم طلب</a>
+</div>
+{% endblock %}

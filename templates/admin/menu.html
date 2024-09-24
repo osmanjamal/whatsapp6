@@ -1,10 +1,37 @@
 {% extends "base.html" %}
 
+{% block title %}إدارة القائمة{% endblock %}
+
 {% block content %}
-<h1>قائمة الطعام</h1>
-<ul>
-{% for item in menu_items %}
-    <li>{{ item.name }} - {{ item.price }} درهم</li>
-{% endfor %}
-</ul>
+<h1>إدارة القائمة</h1>
+<a href="{{ url_for('admin.add_menu_item') }}" class="btn btn-primary">إضافة صنف جديد</a>
+<table class="menu-table">
+    <thead>
+        <tr>
+            <th>الاسم</th>
+            <th>الوصف</th>
+            <th>السعر</th>
+            <th>متوفر</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in menu_items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.price }} ريال</td>
+            <td>{{ 'نعم' if item.is_available else 'لا' }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_menu_item', item_id=item.id) }}" class="btn btn-small">تعديل</a>
+                <form method="POST" action="{{ url_for('admin.toggle_availability', item_id=item.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-small">
+                        {% if item.is_available %}إيقاف التوفر{% else %}إتاحة{% endif %}
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}تقديم طلب{% endblock %}
+
+{% block content %}
+<h1>تقديم طلب</h1>
+<form method="POST" action="{{ url_for('main.order') }}">
+    <div class="form-group">
+        <label for="phone">رقم الهاتف:</label>
+        <input type="tel" id="phone" name="phone" required>
+    </div>
+    <div class="form-group">
+        <label for="name">الاسم (اختياري):</label>
+        <input type="text" id="name" name="name">
+    </div>
+    <h2>اختر من القائمة:</h2>
+    {% for item in menu_items %}
+    <div class="menu-item-order">
+        <input type="checkbox" id="item_{{ item.id }}" name="items" value="{{ item.id }}" {% if not item.is_available %}disabled{% endif %}>
+        <label for="item_{{ item.id }}">{{ item.name }} - {{ item.price }} ريال</label>
+        {% if item.is_available %}
+        <input type="number" name="quantity_{{ item.id }}" min="1" value="1">
+        {% else %}
+        <span class="unavailable-text">غير متوفر</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">تقديم الطلب</button>
+</form>
+{% endblock %}
