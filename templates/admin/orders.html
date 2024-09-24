@@ -1,19 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>إدارة الطلبات</h1>
-<table>
-    <tr>
-        <th>رقم الطلب</th>
-        <th>حالة الطلب</th>
-        <th>السعر الإجمالي</th>
-    </tr>
-    {% for order in orders %}
-    <tr>
-        <td>{{ order.id }}</td>
-        <td>{{ order.status }}</td>
-        <td>{{ order.total_price }} درهم</td>
-    </tr>
+<h1>تقديم طلب</h1>
+<form method="POST">
+    <label for="phone">رقم الهاتف:</label>
+    <input type="text" id="phone" name="phone" required><br><br>
+    
+    <h2>اختر الأصناف:</h2>
+    {% for item in menu_items %}
+    <input type="checkbox" id="item{{ item.id }}" name="items" value="{{ item.id }}">
+    <label for="item{{ item.id }}">{{ item.name }} - {{ item.price }} درهم</label><br>
     {% endfor %}
-</table>
+    
+    <br><input type="submit" value="تقديم الطلب">
+</form>
 {% endblock %}

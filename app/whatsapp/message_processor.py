@@ -1,5 +1,4 @@
-from app.models import Customer, Order, MenuItem
-from app import db
+from app.models import db, Customer, Order, MenuItem
 
 def process_whatsapp_message(sender, message):
     customer = Customer.query.filter_by(phone=sender).first()
@@ -13,7 +12,7 @@ def process_whatsapp_message(sender, message):
     elif message.lower().startswith('order'):
         return process_order(customer, message)
     else:
-        return "مرحبًا بك في مطعم المحاشي! يمكنك طلب القائمة بإرسال كلمة 'menu' أو تقديم طلب بإرسال 'order' متبوعًا بأرقام الأصناف."
+        return "مرحباً بك في مطعم المحاشي! يمكنك طلب القائمة بإرسال كلمة 'menu' أو تقديم طلب بإرسال 'order' متبوعًا بأرقام الأصناف."
 
 def get_menu():
     menu_items = MenuItem.query.all()
@@ -23,23 +22,20 @@ def get_menu():
     return menu_text
 
 def process_order(customer, message):
-    # This is a simple implementation. You might want to expand this for real-world use.
     order_items = message.split()[1:]
     if not order_items:
         return "الرجاء تحديد أرقام الأصناف التي تريد طلبها."
     
-    new_order = Order(customer_id=customer.id, status='new', total_price=0)
+    new_order = Order(customer=customer, status='new')
     db.session.add(new_order)
     
-    total_price = 0
     order_summary = "طلبك:\n"
     for item_id in order_items:
         menu_item = MenuItem.query.get(int(item_id))
         if menu_item:
-            total_price += menu_item.price
+            new_order.items.append(menu_item)
             order_summary += f"- {menu_item.name}\n"
     
-    new_order.total_price = total_price
     db.session.commit()
     
-    return f"{order_summary}\nالمجموع: {total_price} درهم\nرقم طلبك هو: {new_order.id}. شكرًا لطلبك من مطعم المحاشي!"
+    return f"{order_summary}\nرقم طلبك هو: {new_order.id}. شكرًا لطلبك من مطعم المحاشي!"

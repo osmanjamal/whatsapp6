@@ -16,12 +16,10 @@ def create_app():
     from app.routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    from app.whatsapp.webhook import whatsapp as whatsapp_blueprint
-    app.register_blueprint(whatsapp_blueprint, url_prefix='/whatsapp')
-
-    from app.admin.views import admin as admin_blueprint
-    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    with app.app_context():
+        from app.models import init_db
+        init_db()
 
     return app
 
-from app import models  # Import models to ensure they are known to Flask-Migrate
+from app import models
